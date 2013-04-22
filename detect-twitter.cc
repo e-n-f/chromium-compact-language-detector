@@ -7,6 +7,16 @@
 
 // gcc -I. -L. -o example example.cc -lcld
 
+char *skipurl(char *s) {
+	while (isalpha(*s) || isdigit(*s) || *s == '/' || *s == '-' ||
+	       *s == '_' || *s == '.' || *s == '@' || *s == '$' ||
+	       *s == '+' || *s == '&') {
+		s++;
+	}
+
+	return s;
+}
+
 int main(int argc, char **argv) {
     bool is_plain_text = true;
     bool is_reliable;
@@ -69,6 +79,20 @@ int main(int argc, char **argv) {
 				*out++ = '<';
 				continue;
 			}
+		}
+
+		if (strncmp(x, "http://", 7) == 0) {
+			x += 7;
+			x = skipurl(x);
+			x--;
+			continue;
+		}
+
+		if (strncmp(x, "https://", 7) == 0) {
+			x += 8;
+			x = skipurl(x);
+			x--;
+			continue;
 		}
 
 		if (*x == '@') {
