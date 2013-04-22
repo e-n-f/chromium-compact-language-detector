@@ -42,5 +42,7 @@ echo
 echo "Compile example.cc"
 $CC -DCLD_WINDOWS -I. -L. -o example example.cc -lcld -lstdc++
 
+$CC -DCLD_WINDOWS -I. -L. -o detect-twitter detect-twitter.cc -lcld -lstdc++
+
 echo
 echo "Done!"
