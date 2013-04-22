@@ -41,6 +41,11 @@ int main(int argc, char **argv) {
 	for (; *cp && isspace(*cp); cp++)
 	    ;
 
+	for (; *cp && !isspace(*cp); cp++)
+	    ; /* client */
+	for (; *cp && isspace(*cp); cp++)
+	    ;
+
         Language lang = CompactLangDet::DetectLanguage(0, cp, strlen(cp),
                                                        is_plain_text,
                                                        &is_reliable);
