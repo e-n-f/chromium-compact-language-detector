@@ -46,6 +46,43 @@ int main(int argc, char **argv) {
 	for (; *cp && isspace(*cp); cp++)
 	    ;
 
+	char orig[10000];
+	strcpy(orig, cp);
+
+	char *x;
+	char *out = cp;
+
+	for (x = orig; *x; x++) {
+		if (*x == '&') {
+			if (strncmp(x, "&amp;", 5) == 0) {
+				x += 4;
+				*out++ = '&';
+				continue;
+			}
+			if (strncmp(x, "&gt;", 4) == 0) {
+				x += 3;
+				*out++ = '>';
+				continue;
+			}
+			if (strncmp(x, "&lt;", 4) == 0) {
+				x += 3;
+				*out++ = '<';
+				continue;
+			}
+		}
+
+		if (*x == '@') {
+			while (isalpha(x[1]) || x[1] == '_') {
+				x++;
+			}
+			continue;
+		}
+
+		*out++ = *x;
+	}
+
+	*out++ = '\0';
+
         Language lang = CompactLangDet::DetectLanguage(0, cp, strlen(cp),
                                                        is_plain_text,
                                                        &is_reliable);
@@ -54,6 +91,6 @@ int main(int argc, char **argv) {
 	for (c = s; c < cp; c++) {
 	    putchar(*c);
 	}
-        printf("%c %s %s %s", is_reliable ? 'y' : 'n', LanguageCode(lang), LanguageName(lang), cp);
+        printf("%c %s %s %s", is_reliable ? 'y' : 'n', LanguageCode(lang), LanguageName(lang), orig);
     }
 }
