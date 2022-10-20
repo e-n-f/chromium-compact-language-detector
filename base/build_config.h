@@ -89,6 +89,10 @@
 #define ARCH_CPU_ARMEL 1
 #define ARCH_CPU_32_BITS 1
 #define WCHAR_T_IS_UNSIGNED 1
+#elif defined(__AARCH64EL__)
+#define ARCH_CPU_ARM_FAMILY 1
+#define ARCH_CPU_ARMEL 1
+#define ARCH_CPU_64_BITS 1
 #else
 #error Please add support for your architecture in build/build_config.h
 #endif
